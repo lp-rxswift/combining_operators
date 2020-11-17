@@ -20,3 +20,11 @@ example(of: "observable.concat") {
 
   observable.subscribe(onNext: { print($0) })
 }
+
+example(of: "concat") {
+  let germanCities = Observable.of("Berlim", "Munich", "Frankfurt")
+  let spanishCities = Observable.of("Madrid", "Barcelona", "Valencia")
+
+  let observable = germanCities.concat(spanishCities)
+  _ = observable.subscribe(onNext:{ print($0) })
+}
