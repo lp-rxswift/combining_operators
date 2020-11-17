@@ -1,7 +1,15 @@
 import Foundation
-import RxSwift
 import PlaygroundSupport
+import RxSwift
+
 PlaygroundPage.current.needsIndefiniteExecution = true
 
-print("teste")
 
+example(of: "start with") {
+  let bag = DisposeBag()
+  let numbers = Observable.of("2","3","4")
+  let observable = numbers.startWith("1")
+  observable
+    .subscribe(onNext: { print($0) })
+    .disposed(by: bag)
+}
