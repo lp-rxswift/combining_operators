@@ -80,6 +80,12 @@ example(of: "combine latest") {
 
   _ = observable.subscribe(onNext: { print($0) })
 
+  // == another way
+  _ = Observable.combineLatest([left, right]) {
+    strings in strings.joined(separator: " ")
+  }
+
+
   print("> Sending a value to Left")
   left.onNext("Hello,")
   number.onNext(1)
