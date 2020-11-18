@@ -28,3 +28,23 @@ example(of: "concat") {
   let observable = germanCities.concat(spanishCities)
   _ = observable.subscribe(onNext:{ print($0) })
 }
+
+example(of: "concat map") {
+  let sequences = [
+    "German cities": Observable.of("Berlin", "Munich", "Frankfurt"),
+    "Spanish cities": Observable.of("Madrid", "Barcelona", "Valencia")
+  ]
+
+  let observable = Observable.of("German cities", "Spanish cities")
+    .concatMap { country in sequences[country] ?? .empty() }
+
+  _ = observable.subscribe(onNext:{ print($0) })
+}
+
+
+
+
+
+
+
+
