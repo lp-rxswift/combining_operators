@@ -113,5 +113,20 @@ example(of: "combine user choice and value") {
   _ = observable.subscribe(onNext: { print($0) })
 }
 
+example(of: "zip") {
+  enum Weather {
+    case sunny, cloudy
+  }
+
+  let left: Observable<Weather> = Observable.of(.sunny, .cloudy, .cloudy, .sunny)
+  let right = Observable.of("Libon", "Copenhagen", "London", "Madrid", "Vienna")
+
+  let observable = Observable.zip(left, right) { weather, city in
+    return "It's \(weather) in \(city)"
+  }
+
+  _ = observable.subscribe(onNext: { print($0) })
+}
+
 
 
