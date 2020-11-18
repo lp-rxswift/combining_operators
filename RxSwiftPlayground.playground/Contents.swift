@@ -68,7 +68,31 @@ example(of: "merge") {
   right.onCompleted()
 }
 
+example(of: "combine latest") {
+  let left = PublishSubject<String>()
+  let right = PublishSubject<String>()
+  let number = PublishSubject<Int>()
 
+  let observable = Observable.combineLatest(left, right, number) {
+    lastLeft, lastRight, number in
+      "\(lastLeft) \(lastRight) \(number)"
+  }
+
+  _ = observable.subscribe(onNext: { print($0) })
+
+  print("> Sending a value to Left")
+  left.onNext("Hello,")
+  number.onNext(1)
+  print("> Sending a value to Right")
+  right.onNext("world")
+  print("> Sending another value to Right")
+  right.onNext("RxSwift")
+  print("> Sending another value to Left")
+  left.onNext("Have a good day,")
+
+  left.onCompleted()
+  right.onCompleted()
+}
 
 
 
