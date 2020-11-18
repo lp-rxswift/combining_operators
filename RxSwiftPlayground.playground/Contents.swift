@@ -94,7 +94,18 @@ example(of: "combine latest") {
   right.onCompleted()
 }
 
+example(of: "combine user choice and value") {
+  let choice: Observable<DateFormatter.Style> = Observable.of(.short, .long)
+  let dates = Observable.of(Date())
 
+  let observable = Observable.combineLatest(choice, dates) { format, when -> String in
+    let formatter = DateFormatter()
+    formatter.dateStyle = format
+    return formatter.string(from: when)
+  }
+
+  _ = observable.subscribe(onNext: { print($0) })
+}
 
 
 
