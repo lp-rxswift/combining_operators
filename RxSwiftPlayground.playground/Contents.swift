@@ -41,6 +41,32 @@ example(of: "concat map") {
   _ = observable.subscribe(onNext:{ print($0) })
 }
 
+example(of: "merge") {
+  let left = PublishSubject<String>()
+  let right = PublishSubject<String>()
+
+  let source = Observable.of(left.asObservable(), right.asObservable())
+
+  let observable = source.merge()
+  _ = observable.subscribe(onNext: { print($0) })
+
+  var leftValues = ["Berlin", "Munich", "Frankfurt"]
+  var rightValues = ["Madrid", "Barcelona", "Valencia"]
+
+  repeat {
+    switch Bool.random() {
+    case true where !leftValues.isEmpty:
+      left.onNext("Left: \(leftValues.removeFirst())")
+    case false where !rightValues.isEmpty:
+      right.onNext("Right: \(rightValues.removeFirst())")
+    default:
+      break
+    }
+  } while !leftValues.isEmpty || !rightValues.isEmpty
+
+  left.onCompleted()
+  right.onCompleted()
+}
 
 
 
