@@ -142,4 +142,18 @@ example(of: "with latest from") {
   button.onNext(())
 }
 
+example(of: "sample") {
+  let button = PublishSubject<Void>()
+  let textField = PublishSubject<String>()
+
+  let observable = textField.sample(button)
+  _ = observable.subscribe(onNext: { print($0) })
+
+  textField.onNext("Par")
+  textField.onNext("Pari")
+  textField.onNext("Paris")
+  button.onNext(())
+  button.onNext(())
+}
+
 
