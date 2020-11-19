@@ -217,3 +217,12 @@ example(of: "scan") {
   let observable = source.scan(0, accumulator: +)
   _ = observable.subscribe(onNext: { print($0) })
 }
+
+example(of: "scan and zip") {
+  let source = Observable.of(1, 3, 5, 7, 9)
+  let observableScan = source.scan(0, accumulator: +)
+  let observableZip = Observable.zip(source, observableScan) { value, total in
+    return "The value is \(value) and the current total is \(total)"
+  }
+  _ = observableZip.subscribe(onNext: { print($0) })
+}
