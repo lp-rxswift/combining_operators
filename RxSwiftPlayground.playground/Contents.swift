@@ -156,4 +156,20 @@ example(of: "sample") {
   button.onNext(())
 }
 
+example(of: "amb") {
+  let left = PublishSubject<String>()
+  let right = PublishSubject<String>()
+
+  let observable = left.amb(right)
+  _ = observable.subscribe(onNext: { print($0) })
+
+  left.onNext("Lisbon")
+  right.onNext("Copenhagen")
+  left.onNext("London")
+  left.onNext("Madrid")
+  right.onNext("Vienna")
+  left.onCompleted()
+  right.onCompleted()
+}
+
 
