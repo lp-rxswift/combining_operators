@@ -128,5 +128,18 @@ example(of: "zip") {
   _ = observable.subscribe(onNext: { print($0) })
 }
 
+example(of: "with latest from") {
+  let button = PublishSubject<Void>()
+  let textField = PublishSubject<String>()
+
+  let observable = button.withLatestFrom(textField)
+  _ = observable.subscribe(onNext: { print($0) })
+
+  textField.onNext("Par")
+  textField.onNext("Pari")
+  textField.onNext("Paris")
+  button.onNext(())
+  button.onNext(())
+}
 
 
