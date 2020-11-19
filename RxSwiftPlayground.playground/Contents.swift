@@ -211,3 +211,9 @@ example(of: "reduce") {
 
   _ = observable2.subscribe(onNext: { print($0) })
 }
+
+example(of: "scan") {
+  let source = Observable.of(1, 3, 5, 7, 9)
+  let observable = source.scan(0, accumulator: +)
+  _ = observable.subscribe(onNext: { print($0) })
+}
