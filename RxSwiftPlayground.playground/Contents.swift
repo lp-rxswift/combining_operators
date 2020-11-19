@@ -226,3 +226,14 @@ example(of: "scan and zip") {
   }
   _ = observableZip.subscribe(onNext: { print($0) })
 }
+
+example(of: "just scan and touple to show current values") {
+  let source = Observable.of(1, 3, 5, 7, 9)
+  let observable = source.scan((0, 0)) { acc, current in
+    return (current, acc.0 + current)
+  }
+
+  _ = observable.subscribe(onNext: { tuple in
+    print("Value = \(tuple.0)   Running total = \(tuple.1)")
+  })
+}
